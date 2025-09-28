@@ -10,7 +10,10 @@ def train_loop(dataloader, model, loss_fn, optimizer):
     model.train()
     batch_size = dataloader.batch_size
     for batch, (X, y) in enumerate(dataloader):
-        # Compute prediction and loss
+        
+        X = X.to('cuda')
+        y = y.to('cuda')
+        
         pred = model(X)
 
         loss = loss_fn(pred, y)
@@ -42,7 +45,8 @@ def test_loop(dataloader, model, loss_fn):
     # also serves to reduce unnecessary gradient computations and memory usage for tensors with requires_grad=True
     with torch.no_grad():
         for X, y in dataloader:
-            
+            X = X.to('cuda')
+            y = y.to('cuda')
             
             pred = model(X)
 
